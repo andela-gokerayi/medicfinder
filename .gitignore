@@ -1,0 +1,17 @@
+*.pyc
+*.pyo
+medicfinder_env
+*.sqlite3
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib64/
+.env
+*.egg-info/
+.installed.cfg
+*.egg
+staticfiles
+prod_env

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="content-body">
+        <div class="navi">
+            <a href="{% url 'home' %}" class="brand-logo"><img src="{% static "images/medic-logo.png" %}"></a>
+            <ul id="nav-list">
+                <li><a href="#" class="about">ABOUT</a></li>
+            </ul>
+        </div>
+        <div id="tfheader">
+            <p class="short-word">Find the nearest hospitals to you</p>
+            <form id="tfnewsearch">
+                <input type="text" class="tftextinput">
+            </form>
+        <button class="btn waves-effect waves-light teal lighten-2 right" name="action" onclick="initialize()">Send
+            <i class="mdi-content-send right"></i>
+        </button>
+         </div>
+    </div>
+{% endblock %}
+

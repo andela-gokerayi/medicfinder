@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load endless %}
+
+    {% block header %}
+        <nav id='other-nav'>
+            <ul class="logo" >  
+            <li><img src="{% static "images/medic-logo-blue.png" %}"></li>
+            </ul>
+
+            <ul class="nav-list-hospital">
+                <li>ABOUT</li>
+            </ul>
+        </nav>
+    {% endblock %}
+    {% block content %}
+        <p id="feedback-message">...showing results for hospitals near "location goes here"</p>
+        {% paginate object_list %}
+            {% for hospital in object_list %}
+                <div class="row">
+                    <div class="col s12 m6 hospital-card">
+                        <div class="card">
+                            <div class="col s8">
+                                <div>
+                                   <p class="hospital-list">{{hospital.name}}</p>
+                                   <span class="hospital-ad">{{hospital.formatted_address}}</span>
+                                </div>
+                            </div>
+                            <div class="col s4 right-card">
+                                <a href="#">
+                                    <div>
+                                        <img src="{% static "images/medic-directiion.png" %}" class="get-direction-image">
+                                        <p class="get-direction">get Directions</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% get_pages %}
+            <div class="paginate">
+                {{ pages }}
+            </div>
+    {% endblock %}

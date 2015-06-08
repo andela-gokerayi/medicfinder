@@ -42,9 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'endless_pagination',
+    'geoposition',
+    'reploc',
     'hospital'
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+COMMENTS_APP = 'threadedcomments'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -72,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'reploc.context_processors.representatives',
             ],
         },
     },
@@ -79,6 +86,7 @@ TEMPLATES = [
 
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
+    'reploc.context_processors.representatives',
 )
 
 WSGI_APPLICATION = 'medicfinder.wsgi.application'
@@ -118,6 +126,7 @@ STATICFILES_DIRS = (
     'static',
 )
 
+GOOGLE_MAPS_KEY = 'AIzaSyCy7LFUt1ss4Riedr0gmed9IHvth0qbuY8'
 DEVELOPER_KEY = 'AIzaSyCUVB67Dj8IHR0x8XgPqR3kRtBaWqL8p5c'
 ENDLESS_PAGINATION_PER_PAGE = 3
 ENDLESS_PAGINATION_PAGE_LABEL = 'list'

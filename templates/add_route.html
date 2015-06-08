@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load staticfiles %}
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Place search pagination</title>
+   <style>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500italic' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="medicfinder/styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'materialize/css/materialize.css'%}">
+     /* html, body, #map-canvas {
+        height: 70%;
+        width: 70%;
+        margin: 0px;
+        padding: 0px
+      }*/
+    <style>
+      /*#results {
+        font-family: Arial, Helvetica, sans-serif;
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        margin-top: -195px;
+        margin-right: 25%;
+        height: 380px;
+        width: 300px;
+        padding: 5px;
+        z-index: 5;
+        border: 1px solid #999;
+        background: #fff;
+      }*/
+     /* h2 {
+        font-size: 22px;
+        margin: 0 0 5px 0;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        height: 321px;
+        width: 200px;
+        overflow-y: scroll;
+      }
+      li {
+        background-color: #f1f1f1;
+        padding: 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      li:nth-child(odd) {
+        background-color: #fcfcfc;
+      }
+      #more {
+        width: 100%;
+        margin: 5px 0 0 0;
+      }*/
+    </style>
+  </head>
+  <body>
+      {% block header %}
+        <nav id='other-nav'>
+            <ul class="logo" >  
+            <li><img src="{% static "images/medic-logo-blue.png" %}"></li>
+            </ul>
+
+            <ul class="nav-list-hospital">
+                <li>ABOUT</li>
+            </ul>
+        </nav>
+    {% endblock %}
+  {% block content %}
+    <div id="map-canvas"></div>
+    <div id="results">
+      <p id="feedback-message">...showing results for hospitals near your location</p>
+      <div class="row">
+        <div class="col s12 m6 hospital-card">
+          <div id="places">
+          </div>
+        </div>
+      </div>
+      <a id="more" class="paginate">view more</a>
+    </div>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'materialize/js/materialize.js' %}"></script>
+    <script>
+        var map, placesList;
+
+        function initialize() {
+          var mapOptions = {
+            zoom: 10
+          };
+
+            var to = {
+              placeId: 'ChIJN1t_tDeuEmsRUsoyG83frY4'
+            }
+
+          map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+
+          var pos;
+
+          if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+              console.log(pos);
+              var infowindow = new google.maps.InfoWindow({
+                map: map,
+                position: pos,
+                content: 'Your Position',
+              });
+              map.setCenter(pos);
+            }, 
+            function() {
+              handleNoGeolocation(true);
+            });
+          } else {
+            // Browser doesn't support Geolocation
+            handleNoGeolocation(false);
+          }
+          // var yaba = new google.maps.LatLng(6.5243793, 3.379205700000057);
+          setTimeout(function(){ 
+            var request = {
+              location: pos,
+              radius: 500,
+              types: ['hospital']
+            };
+
+            placesList = document.getElementById('places');
+
+            var service = new google.maps.places.PlacesService(map);
+            service.nearbySearch(request, callback);
+            // service.getDetails(to, callback);
+          }, 5000);
+        
+
+        function callback(results, status, pagination) {
+          if (status != google.maps.places.PlacesServiceStatus.OK) {
+            return;
+          } else {
+            createMarkers(results);
+
+            if (pagination.hasNextPage) {
+              var moreButton = document.getElementById('more');
+
+              moreButton.disabled = false;
+
+              google.maps.event.addDomListenerOnce(moreButton, 'click',
+                  function() {
+                moreButton.disabled = true;
+                pagination.nextPage();
+              });
+            }
+          }
+      }
+
+      function createMarkers(places) {
+        var bounds = new google.maps.LatLngBounds();
+
+        for (var i = 0, place; place = places[i]; i++) {
+          var image = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+
+          var marker = new google.maps.Marker({
+            map: map,
+            // icon: image,
+            title: place.name,
+            position: place.geometry.location
+          });
+
+          placesList.innerHTML += '<div class="card">' + '<div class="col s8">' + '<li class="hospital-list">' + place.name + '</li>' + '</div>' + '<div class="col s4 right-card">' + '<a><img src="{% static "images/medic-directiion.png" %}" class="get-direction-image"></a>' + '<p class="get-direction">get Directions</p>' + '</div>' + '</div>';
+
+          bounds.extend(place.geometry.location);
+        }
+        map.fitBounds(bounds);
+      }
+        }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  {% endblock %}
+  </body>
+</html>
+
+
+
+
+

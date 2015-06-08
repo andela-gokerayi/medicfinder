@@ -1,0 +1,18 @@
+<div id="{{ hospital.slug }}" class="modal">
+    <div class="modal-content">
+        <h6>What people are saying about {{hospital.name}}</h6>
+        {% for comment in hospital.comments.all %}
+            {{ comment }}
+        {% endfor %}
+        <p class="comment-form">
+            {# <h1>{{ hospital.slug }}</h1> #}
+            <form method="POST" action ="{% url 'hospital-detail'  hospital.slug  %}">
+                {% csrf_token %}
+                <p>
+                   {{ form.as_p }} 
+                </p>
+                <input type="submit" name="submit" class="modal-action waves-effect waves-green btn-flat add-comment" value="Submit" />
+            </form>
+        </p>
+    </div>
+</div>

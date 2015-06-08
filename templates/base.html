@@ -17,6 +17,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'styles/reset.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'materialize/css/materialize.css'%}">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     {% endblock %}
 </head>
 <body>
@@ -33,9 +34,17 @@
 
     {% endblock %}
 
-    <!--<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=AIzaSyCUVB67Dj8IHR0x8XgPqR3kRtBaWqL8p5c" type="text/javascript"></script>-->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'materialize/js/materialize.js' %}"></script>
+    <script type="text/javascript">
+        $('.modal-trigger').leanModal({
+          dismissible: true, // Modal can be dismissed by clicking outside of the modal
+          opacity: .5, // Opacity of modal background
+          in_duration: 300, // Transition in duration
+          out_duration: 200, // Transition out duration
+        }
+      );
+    </script>
+    
 </body>
 </html>

@@ -70,7 +70,7 @@ class HospitalDetail():
     # You may prefer to use the text_search API, instead.
     query_result = google_places.nearby_search(
             location='Lagos', keyword='hospital', lat_lng=None,
-            radius=1000, types=[types.TYPE_HOSPITAL])
+            radius=2000, types=[types.TYPE_HOSPITAL])
     save_hospital(query_result.places)
     # print query_result.places
 

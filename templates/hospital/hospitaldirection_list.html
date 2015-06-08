@@ -13,10 +13,18 @@
             </ul>
         </nav>
     {% endblock %}
+
+    {% block extra_js%} 
+        <script src="http://malsup.github.com/jquery.form.js"></script> 
+    {% endblock %}
+
+
     {% block content %}
-        <p id="feedback-message">...showing results for hospitals near "location goes here"</p>
+        <p id="feedback-message">...showing results for hospitals near your location</p>
         {% paginate object_list %}
             {% for hospital in object_list %}
+            
+            
                 <div class="row">
                     <div class="col s12 m6 hospital-card">
                         <div class="card">
@@ -25,18 +33,22 @@
                                    <p class="hospital-list">{{hospital.name}}</p>
                                    <span class="hospital-ad">{{hospital.formatted_address}}</span>
                                 </div>
+                               <ul class="comment">
+                                  <a href="#{{hospital.slug}}" class="waves-effect waves-light modal-trigger comment-link"><li class="comment-list"><i class="fa fa-comment-o comment-icon"></i>comments</li></a>
+                               </ul>
                             </div>
                             <div class="col s4 right-card">
                                 <a href="#">
                                     <div>
                                         <img src="{% static "images/medic-directiion.png" %}" class="get-direction-image">
-                                        <p class="get-direction">get Directions</p>
+                                        <p class="get-direction">get directions</p>
                                     </div>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% include "hospital-list.html" %}
             {% endfor %}
             {% get_pages %}
             <div class="paginate">

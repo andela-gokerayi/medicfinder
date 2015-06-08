@@ -1,6 +1,7 @@
-html body {
-    height: 100%;
-    width: 100%;
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .brand-logo {
@@ -66,7 +67,7 @@ html body {
 }
 
 section {
-    margin-top: 5%;
+    /*margin-top: 5%;*/
 }
 
 #tfheader {
@@ -94,7 +95,7 @@ section {
 #feedback-message {
     color: #49C5BE;
     margin-left: 30%;
-    margin-bottom: 2%
+    margin-top: 6%
 }
 
 .hospital-card {
@@ -113,6 +114,7 @@ section {
     text-align: center;
     color: #fff;
     padding-bottom: 5%;
+    text-transform: lowercase !important;
 }
 
 .hospital {
@@ -120,7 +122,7 @@ section {
 }
 
 .hospital-list {
-    height: 30px;
+    height: 80px;
     width: 60%;
     margin-top: 25px;
     margin-left: 29px;
@@ -129,10 +131,40 @@ section {
 .hospital-ad {
     line-height: 25px;
     font-size: small;
-    margin-left: 29px;
+    /*margin-left: 29px;*/
 }
 
 .paginate {
     margin-left: 70%;
+    color: #49C5BE;
 }
 
+.comment {
+    /*margin-top: 2px;*/
+    float: right;
+}
+
+.comment-list {
+    font-size: 14px;
+}
+
+.comment-link {
+    text-decoration: none !important;
+    text-transform: lowercase !important;
+    color: #49C5BE !important;
+}
+
+.add-comment {
+    background-color: #49C5BE !important;
+    margin-top: 10px;
+    float: right;
+}
+
+.modal {
+    height: 70% !important;
+    margin-top: 5% !important;
+}
+
+.comment-form {
+    margin-top: 40%;
+}

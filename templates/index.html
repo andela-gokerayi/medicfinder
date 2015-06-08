@@ -11,12 +11,17 @@
         </div>
         <div id="tfheader">
             <p class="short-word">Find the nearest hospitals to you</p>
-            <form id="tfnewsearch">
+            <!--<form id="tfnewsearch">
                 <input type="text" class="tftextinput">
+            </form>-->
+            <form method="POST" action="">
+            {% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}
             </form>
-        <button class="btn waves-effect waves-light teal lighten-2 right" name="action" onclick="initialize()">Send
+        <!--<button class="btn waves-effect waves-light teal lighten-2 right" name="action" onclick="initialize()">Send
             <i class="mdi-content-send right"></i>
-        </button>
+        </button>-->
          </div>
     </div>
 {% endblock %}

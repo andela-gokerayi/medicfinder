@@ -16,9 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from hospital.views import HomeView, HopitalListView
+from hospital.views import view_hospital
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^hospital/$', HopitalListView.as_view(), name='hospital-list'),
+    url(r'^hospital/(?P<slug>[-\w]+)$', view_hospital, name='hospital-detail'),
 ]
+
